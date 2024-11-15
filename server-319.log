@@ -1,0 +1,269 @@
+2024/11/14 17:16:52 init daemon service
+2024/11/14 17:16:52 zzz ws://test-ws-dtc.speiyou.com:80/wspool/connection?token=asdfasdfasf&client=30&cid=ccfa3a446f0db71401a2db0fbd31bd99&cnum=1&app=CRCtrl&version=1
+2024/11/14 17:16:52 taskSchedule init
+2024/11/14 17:16:52 start run daemon service
+2024/11/14 17:16:52 添加定时任务startPlayer 10s
+2024/11/14 17:17:00 执行定时任务: startPlayer
+2024/11/14 17:17:00 run task1
+2024/11/14 17:17:02 ws 发送msg {"command":"heartbeat-ping","content":{},"from":"30","to":"0","biz":"rt-service-interactive"}
+2024/11/14 17:17:10 执行定时任务: startPlayer
+2024/11/14 17:17:10 run task1
+2024/11/14 17:17:12 ws 发送msg {"command":"heartbeat-ping","content":{},"from":"30","to":"0","biz":"rt-service-interactive"}
+2024/11/14 17:17:20 执行定时任务: startPlayer
+2024/11/14 17:17:20 run task1
+2024/11/14 17:17:22 ws 发送msg {"command":"heartbeat-ping","content":{},"from":"30","to":"0","biz":"rt-service-interactive"}
+2024/11/14 17:17:30 执行定时任务: startPlayer
+2024/11/14 17:17:30 run task1
+2024/11/14 17:17:32 ws 发送msg {"command":"heartbeat-ping","content":{},"from":"30","to":"0","biz":"rt-service-interactive"}
+2024/11/14 17:17:40 执行定时任务: startPlayer
+2024/11/14 17:17:40 run task1
+2024/11/14 17:17:42 ws 发送msg {"command":"heartbeat-ping","content":{},"from":"30","to":"0","biz":"rt-service-interactive"}
+2024/11/14 17:17:50 执行定时任务: startPlayer
+2024/11/14 17:17:50 run task1
+2024/11/14 17:17:52 ws 发送msg {"command":"heartbeat-ping","content":{},"from":"30","to":"0","biz":"rt-service-interactive"}
+2024/11/14 17:18:00 执行定时任务: startPlayer
+2024/11/14 17:18:00 run task1
+2024/11/14 17:18:02 ws 发送msg {"command":"heartbeat-ping","content":{},"from":"30","to":"0","biz":"rt-service-interactive"}
+2024/11/14 17:18:10 执行定时任务: startPlayer
+2024/11/14 17:18:10 run task1
+2024/11/14 17:18:12 ws 发送msg {"command":"heartbeat-ping","content":{},"from":"30","to":"0","biz":"rt-service-interactive"}
+2024/11/14 17:18:20 执行定时任务: startPlayer
+2024/11/14 17:18:20 run task1
+2024/11/14 17:18:22 ws 发送msg {"command":"heartbeat-ping","content":{},"from":"30","to":"0","biz":"rt-service-interactive"}
+2024/11/14 17:18:30 执行定时任务: startPlayer
+2024/11/14 17:18:30 run task1
+2024/11/14 17:18:32 ws 发送msg {"command":"heartbeat-ping","content":{},"from":"30","to":"0","biz":"rt-service-interactive"}
+2024/11/14 17:18:40 执行定时任务: startPlayer
+2024/11/14 17:18:40 run task1
+2024/11/14 17:18:42 ws 发送msg {"command":"heartbeat-ping","content":{},"from":"30","to":"0","biz":"rt-service-interactive"}
+2024/11/14 17:18:50 执行定时任务: startPlayer
+2024/11/14 17:18:50 run task1
+2024/11/14 17:18:52 ws 发送msg {"command":"heartbeat-ping","content":{},"from":"30","to":"0","biz":"rt-service-interactive"}
+2024/11/14 17:19:00 执行定时任务: startPlayer
+2024/11/14 17:19:00 run task1
+2024/11/14 17:19:02 ws 发送msg {"command":"heartbeat-ping","content":{},"from":"30","to":"0","biz":"rt-service-interactive"}
+2024/11/14 17:19:10 执行定时任务: startPlayer
+2024/11/14 17:19:10 run task1
+2024/11/14 17:19:12 ws 发送msg {"command":"heartbeat-ping","content":{},"from":"30","to":"0","biz":"rt-service-interactive"}
+2024/11/14 17:19:20 执行定时任务: startPlayer
+2024/11/14 17:19:20 run task1
+2024/11/14 17:19:22 ws 发送msg {"command":"heartbeat-ping","content":{},"from":"30","to":"0","biz":"rt-service-interactive"}
+2024/11/14 17:19:30 执行定时任务: startPlayer
+2024/11/14 17:19:30 run task1
+2024/11/14 17:19:32 ws 发送msg {"command":"heartbeat-ping","content":{},"from":"30","to":"0","biz":"rt-service-interactive"}
+2024/11/14 17:19:40 执行定时任务: startPlayer
+2024/11/14 17:19:40 run task1
+2024/11/14 17:19:42 ws 发送msg {"command":"heartbeat-ping","content":{},"from":"30","to":"0","biz":"rt-service-interactive"}
+2024/11/14 17:19:50 执行定时任务: startPlayer
+2024/11/14 17:19:50 run task1
+2024/11/14 17:19:52 ws 发送msg {"command":"heartbeat-ping","content":{},"from":"30","to":"0","biz":"rt-service-interactive"}
+2024/11/14 17:20:00 执行定时任务: startPlayer
+2024/11/14 17:20:00 run task1
+2024/11/14 17:20:02 ws 发送msg {"command":"heartbeat-ping","content":{},"from":"30","to":"0","biz":"rt-service-interactive"}
+2024/11/14 17:20:10 执行定时任务: startPlayer
+2024/11/14 17:20:10 run task1
+2024/11/14 17:20:12 ws 发送msg {"command":"heartbeat-ping","content":{},"from":"30","to":"0","biz":"rt-service-interactive"}
+2024/11/14 17:20:20 执行定时任务: startPlayer
+2024/11/14 17:20:20 run task1
+2024/11/14 17:20:22 ws 发送msg {"command":"heartbeat-ping","content":{},"from":"30","to":"0","biz":"rt-service-interactive"}
+2024/11/14 17:20:30 执行定时任务: startPlayer
+2024/11/14 17:20:30 run task1
+2024/11/14 17:20:32 ws 发送msg {"command":"heartbeat-ping","content":{},"from":"30","to":"0","biz":"rt-service-interactive"}
+2024/11/14 17:20:40 执行定时任务: startPlayer
+2024/11/14 17:20:40 run task1
+2024/11/14 17:20:42 ws 发送msg {"command":"heartbeat-ping","content":{},"from":"30","to":"0","biz":"rt-service-interactive"}
+2024/11/14 17:20:50 执行定时任务: startPlayer
+2024/11/14 17:20:50 run task1
+2024/11/14 17:20:52 ws 发送msg {"command":"heartbeat-ping","content":{},"from":"30","to":"0","biz":"rt-service-interactive"}
+2024/11/14 17:21:00 执行定时任务: startPlayer
+2024/11/14 17:21:00 run task1
+2024/11/14 17:21:02 ws 发送msg {"command":"heartbeat-ping","content":{},"from":"30","to":"0","biz":"rt-service-interactive"}
+2024/11/14 17:21:10 执行定时任务: startPlayer
+2024/11/14 17:21:10 run task1
+2024/11/14 17:21:12 ws 发送msg {"command":"heartbeat-ping","content":{},"from":"30","to":"0","biz":"rt-service-interactive"}
+2024/11/14 17:21:20 执行定时任务: startPlayer
+2024/11/14 17:21:20 run task1
+2024/11/14 17:21:22 ws 发送msg {"command":"heartbeat-ping","content":{},"from":"30","to":"0","biz":"rt-service-interactive"}
+2024/11/14 17:21:30 执行定时任务: startPlayer
+2024/11/14 17:21:30 run task1
+2024/11/14 17:21:32 ws 发送msg {"command":"heartbeat-ping","content":{},"from":"30","to":"0","biz":"rt-service-interactive"}
+2024/11/14 17:21:40 执行定时任务: startPlayer
+2024/11/14 17:21:40 run task1
+2024/11/14 17:21:42 ws 发送msg {"command":"heartbeat-ping","content":{},"from":"30","to":"0","biz":"rt-service-interactive"}
+2024/11/14 17:21:50 执行定时任务: startPlayer
+2024/11/14 17:21:50 run task1
+2024/11/14 17:21:52 ws 发送msg {"command":"heartbeat-ping","content":{},"from":"30","to":"0","biz":"rt-service-interactive"}
+2024/11/14 17:22:00 执行定时任务: startPlayer
+2024/11/14 17:22:00 run task1
+2024/11/14 17:22:02 ws 发送msg {"command":"heartbeat-ping","content":{},"from":"30","to":"0","biz":"rt-service-interactive"}
+2024/11/14 17:22:10 执行定时任务: startPlayer
+2024/11/14 17:22:10 run task1
+2024/11/14 17:22:12 ws 发送msg {"command":"heartbeat-ping","content":{},"from":"30","to":"0","biz":"rt-service-interactive"}
+2024/11/14 17:22:20 执行定时任务: startPlayer
+2024/11/14 17:22:20 run task1
+2024/11/14 17:22:22 ws 发送msg {"command":"heartbeat-ping","content":{},"from":"30","to":"0","biz":"rt-service-interactive"}
+2024/11/14 17:22:30 执行定时任务: startPlayer
+2024/11/14 17:22:30 run task1
+2024/11/14 17:22:32 ws 发送msg {"command":"heartbeat-ping","content":{},"from":"30","to":"0","biz":"rt-service-interactive"}
+2024/11/14 17:22:40 执行定时任务: startPlayer
+2024/11/14 17:22:40 run task1
+2024/11/14 17:22:42 ws 发送msg {"command":"heartbeat-ping","content":{},"from":"30","to":"0","biz":"rt-service-interactive"}
+2024/11/14 17:22:50 执行定时任务: startPlayer
+2024/11/14 17:22:50 run task1
+2024/11/14 17:22:52 ws 发送msg {"command":"heartbeat-ping","content":{},"from":"30","to":"0","biz":"rt-service-interactive"}
+2024/11/14 17:23:00 执行定时任务: startPlayer
+2024/11/14 17:23:00 run task1
+2024/11/14 17:23:02 ws 发送msg {"command":"heartbeat-ping","content":{},"from":"30","to":"0","biz":"rt-service-interactive"}
+2024/11/14 17:23:10 执行定时任务: startPlayer
+2024/11/14 17:23:10 run task1
+2024/11/14 17:23:12 ws 发送msg {"command":"heartbeat-ping","content":{},"from":"30","to":"0","biz":"rt-service-interactive"}
+2024/11/14 17:23:20 执行定时任务: startPlayer
+2024/11/14 17:23:20 run task1
+2024/11/14 17:23:22 ws 发送msg {"command":"heartbeat-ping","content":{},"from":"30","to":"0","biz":"rt-service-interactive"}
+2024/11/14 17:23:30 执行定时任务: startPlayer
+2024/11/14 17:23:30 run task1
+2024/11/14 17:23:32 ws 发送msg {"command":"heartbeat-ping","content":{},"from":"30","to":"0","biz":"rt-service-interactive"}
+2024/11/14 17:23:40 执行定时任务: startPlayer
+2024/11/14 17:23:40 run task1
+2024/11/14 17:23:42 ws 发送msg {"command":"heartbeat-ping","content":{},"from":"30","to":"0","biz":"rt-service-interactive"}
+2024/11/14 17:23:50 执行定时任务: startPlayer
+2024/11/14 17:23:50 run task1
+2024/11/14 17:23:52 ws 发送msg {"command":"heartbeat-ping","content":{},"from":"30","to":"0","biz":"rt-service-interactive"}
+2024/11/14 17:24:00 执行定时任务: startPlayer
+2024/11/14 17:24:00 run task1
+2024/11/14 17:24:02 ws 发送msg {"command":"heartbeat-ping","content":{},"from":"30","to":"0","biz":"rt-service-interactive"}
+2024/11/14 17:24:10 执行定时任务: startPlayer
+2024/11/14 17:24:10 run task1
+2024/11/14 17:24:12 ws 发送msg {"command":"heartbeat-ping","content":{},"from":"30","to":"0","biz":"rt-service-interactive"}
+2024/11/14 17:24:20 执行定时任务: startPlayer
+2024/11/14 17:24:20 run task1
+2024/11/14 17:24:22 ws 发送msg {"command":"heartbeat-ping","content":{},"from":"30","to":"0","biz":"rt-service-interactive"}
+2024/11/14 17:24:30 执行定时任务: startPlayer
+2024/11/14 17:24:30 run task1
+2024/11/14 17:24:32 ws 发送msg {"command":"heartbeat-ping","content":{},"from":"30","to":"0","biz":"rt-service-interactive"}
+2024/11/14 17:24:40 执行定时任务: startPlayer
+2024/11/14 17:24:40 run task1
+2024/11/14 17:24:42 ws 发送msg {"command":"heartbeat-ping","content":{},"from":"30","to":"0","biz":"rt-service-interactive"}
+2024/11/14 17:24:50 执行定时任务: startPlayer
+2024/11/14 17:24:50 run task1
+2024/11/14 17:24:52 ws 发送msg {"command":"heartbeat-ping","content":{},"from":"30","to":"0","biz":"rt-service-interactive"}
+2024/11/14 17:25:00 执行定时任务: startPlayer
+2024/11/14 17:25:00 run task1
+2024/11/14 17:25:02 ws 发送msg {"command":"heartbeat-ping","content":{},"from":"30","to":"0","biz":"rt-service-interactive"}
+2024/11/14 17:25:10 执行定时任务: startPlayer
+2024/11/14 17:25:10 run task1
+2024/11/14 17:25:12 ws 发送msg {"command":"heartbeat-ping","content":{},"from":"30","to":"0","biz":"rt-service-interactive"}
+2024/11/14 17:25:20 执行定时任务: startPlayer
+2024/11/14 17:25:20 run task1
+2024/11/14 17:25:22 ws 发送msg {"command":"heartbeat-ping","content":{},"from":"30","to":"0","biz":"rt-service-interactive"}
+2024/11/14 17:25:30 执行定时任务: startPlayer
+2024/11/14 17:25:30 run task1
+2024/11/14 17:25:32 ws 发送msg {"command":"heartbeat-ping","content":{},"from":"30","to":"0","biz":"rt-service-interactive"}
+2024/11/14 17:25:40 执行定时任务: startPlayer
+2024/11/14 17:25:40 run task1
+2024/11/14 17:25:42 ws 发送msg {"command":"heartbeat-ping","content":{},"from":"30","to":"0","biz":"rt-service-interactive"}
+2024/11/14 17:25:50 执行定时任务: startPlayer
+2024/11/14 17:25:50 run task1
+2024/11/14 17:25:52 ws 发送msg {"command":"heartbeat-ping","content":{},"from":"30","to":"0","biz":"rt-service-interactive"}
+2024/11/14 17:26:00 执行定时任务: startPlayer
+2024/11/14 17:26:00 run task1
+2024/11/14 17:26:02 ws 发送msg {"command":"heartbeat-ping","content":{},"from":"30","to":"0","biz":"rt-service-interactive"}
+2024/11/14 17:26:10 执行定时任务: startPlayer
+2024/11/14 17:26:10 run task1
+2024/11/14 17:26:12 ws 发送msg {"command":"heartbeat-ping","content":{},"from":"30","to":"0","biz":"rt-service-interactive"}
+2024/11/14 17:26:20 执行定时任务: startPlayer
+2024/11/14 17:26:20 run task1
+2024/11/14 17:26:22 ws 发送msg {"command":"heartbeat-ping","content":{},"from":"30","to":"0","biz":"rt-service-interactive"}
+2024/11/14 17:26:30 执行定时任务: startPlayer
+2024/11/14 17:26:30 run task1
+2024/11/14 17:26:32 ws 发送msg {"command":"heartbeat-ping","content":{},"from":"30","to":"0","biz":"rt-service-interactive"}
+2024/11/14 17:26:40 执行定时任务: startPlayer
+2024/11/14 17:26:40 run task1
+2024/11/14 17:26:42 ws 发送msg {"command":"heartbeat-ping","content":{},"from":"30","to":"0","biz":"rt-service-interactive"}
+2024/11/14 17:26:50 执行定时任务: startPlayer
+2024/11/14 17:26:50 run task1
+2024/11/14 17:26:52 ws 发送msg {"command":"heartbeat-ping","content":{},"from":"30","to":"0","biz":"rt-service-interactive"}
+2024/11/14 17:27:00 执行定时任务: startPlayer
+2024/11/14 17:27:00 run task1
+2024/11/14 17:27:02 ws 发送msg {"command":"heartbeat-ping","content":{},"from":"30","to":"0","biz":"rt-service-interactive"}
+2024/11/14 17:27:10 执行定时任务: startPlayer
+2024/11/14 17:27:10 run task1
+2024/11/14 17:27:12 ws 发送msg {"command":"heartbeat-ping","content":{},"from":"30","to":"0","biz":"rt-service-interactive"}
+2024/11/14 17:27:20 执行定时任务: startPlayer
+2024/11/14 17:27:20 run task1
+2024/11/14 17:27:22 ws 发送msg {"command":"heartbeat-ping","content":{},"from":"30","to":"0","biz":"rt-service-interactive"}
+2024/11/14 17:27:30 执行定时任务: startPlayer
+2024/11/14 17:27:30 run task1
+2024/11/14 17:27:32 ws 发送msg {"command":"heartbeat-ping","content":{},"from":"30","to":"0","biz":"rt-service-interactive"}
+2024/11/14 17:27:40 执行定时任务: startPlayer
+2024/11/14 17:27:40 run task1
+2024/11/14 17:27:42 ws 发送msg {"command":"heartbeat-ping","content":{},"from":"30","to":"0","biz":"rt-service-interactive"}
+2024/11/14 17:27:50 执行定时任务: startPlayer
+2024/11/14 17:27:50 run task1
+2024/11/14 17:27:52 ws 发送msg {"command":"heartbeat-ping","content":{},"from":"30","to":"0","biz":"rt-service-interactive"}
+2024/11/14 17:28:00 执行定时任务: startPlayer
+2024/11/14 17:28:00 run task1
+2024/11/14 17:28:02 ws 发送msg {"command":"heartbeat-ping","content":{},"from":"30","to":"0","biz":"rt-service-interactive"}
+2024/11/14 17:28:10 执行定时任务: startPlayer
+2024/11/14 17:28:10 run task1
+2024/11/14 17:28:12 ws 发送msg {"command":"heartbeat-ping","content":{},"from":"30","to":"0","biz":"rt-service-interactive"}
+2024/11/14 17:28:20 执行定时任务: startPlayer
+2024/11/14 17:28:20 run task1
+2024/11/14 17:28:22 ws 发送msg {"command":"heartbeat-ping","content":{},"from":"30","to":"0","biz":"rt-service-interactive"}
+2024/11/14 17:28:30 执行定时任务: startPlayer
+2024/11/14 17:28:30 run task1
+2024/11/14 17:28:32 ws 发送msg {"command":"heartbeat-ping","content":{},"from":"30","to":"0","biz":"rt-service-interactive"}
+2024/11/14 17:28:40 执行定时任务: startPlayer
+2024/11/14 17:28:40 run task1
+2024/11/14 17:28:42 ws 发送msg {"command":"heartbeat-ping","content":{},"from":"30","to":"0","biz":"rt-service-interactive"}
+2024/11/14 17:28:50 执行定时任务: startPlayer
+2024/11/14 17:28:50 run task1
+2024/11/14 17:28:52 ws 发送msg {"command":"heartbeat-ping","content":{},"from":"30","to":"0","biz":"rt-service-interactive"}
+2024/11/14 17:29:00 执行定时任务: startPlayer
+2024/11/14 17:29:00 run task1
+2024/11/14 17:29:02 ws 发送msg {"command":"heartbeat-ping","content":{},"from":"30","to":"0","biz":"rt-service-interactive"}
+2024/11/14 17:29:10 执行定时任务: startPlayer
+2024/11/14 17:29:10 run task1
+2024/11/14 17:29:12 ws 发送msg {"command":"heartbeat-ping","content":{},"from":"30","to":"0","biz":"rt-service-interactive"}
+2024/11/14 17:29:20 执行定时任务: startPlayer
+2024/11/14 17:29:20 run task1
+2024/11/14 17:29:22 ws 发送msg {"command":"heartbeat-ping","content":{},"from":"30","to":"0","biz":"rt-service-interactive"}
+2024/11/14 17:29:30 执行定时任务: startPlayer
+2024/11/14 17:29:30 run task1
+2024/11/14 17:29:32 ws 发送msg {"command":"heartbeat-ping","content":{},"from":"30","to":"0","biz":"rt-service-interactive"}
+2024/11/14 17:29:40 执行定时任务: startPlayer
+2024/11/14 17:29:40 run task1
+2024/11/14 17:29:42 ws 发送msg {"command":"heartbeat-ping","content":{},"from":"30","to":"0","biz":"rt-service-interactive"}
+2024/11/14 17:29:50 执行定时任务: startPlayer
+2024/11/14 17:29:50 run task1
+2024/11/14 17:29:52 ws 发送msg {"command":"heartbeat-ping","content":{},"from":"30","to":"0","biz":"rt-service-interactive"}
+2024/11/14 17:30:00 执行定时任务: startPlayer
+2024/11/14 17:30:00 run task1
+2024/11/14 17:30:02 ws 发送msg {"command":"heartbeat-ping","content":{},"from":"30","to":"0","biz":"rt-service-interactive"}
+2024/11/14 17:30:10 执行定时任务: startPlayer
+2024/11/14 17:30:10 run task1
+2024/11/14 17:30:12 ws 发送msg {"command":"heartbeat-ping","content":{},"from":"30","to":"0","biz":"rt-service-interactive"}
+2024/11/14 17:30:20 执行定时任务: startPlayer
+2024/11/14 17:30:20 run task1
+2024/11/14 17:30:22 ws 发送msg {"command":"heartbeat-ping","content":{},"from":"30","to":"0","biz":"rt-service-interactive"}
+2024/11/14 17:30:30 执行定时任务: startPlayer
+2024/11/14 17:30:30 run task1
+2024/11/14 17:30:32 ws 发送msg {"command":"heartbeat-ping","content":{},"from":"30","to":"0","biz":"rt-service-interactive"}
+2024/11/14 17:30:40 执行定时任务: startPlayer
+2024/11/14 17:30:40 run task1
+2024/11/14 17:30:42 ws 发送msg {"command":"heartbeat-ping","content":{},"from":"30","to":"0","biz":"rt-service-interactive"}
+2024/11/14 17:30:50 执行定时任务: startPlayer
+2024/11/14 17:30:50 run task1
+2024/11/14 17:30:52 ws 发送msg {"command":"heartbeat-ping","content":{},"from":"30","to":"0","biz":"rt-service-interactive"}
+2024/11/14 17:31:00 执行定时任务: startPlayer
+2024/11/14 17:31:00 run task1
+2024/11/14 17:31:02 ws 发送msg {"command":"heartbeat-ping","content":{},"from":"30","to":"0","biz":"rt-service-interactive"}
+2024/11/14 17:31:10 执行定时任务: startPlayer
+2024/11/14 17:31:10 run task1
+2024/11/14 17:31:12 ws 发送msg {"command":"heartbeat-ping","content":{},"from":"30","to":"0","biz":"rt-service-interactive"}
+2024/11/14 17:31:20 执行定时任务: startPlayer
+2024/11/14 17:31:20 run task1
+2024/11/14 17:31:22 ws 发送msg {"command":"heartbeat-ping","content":{},"from":"30","to":"0","biz":"rt-service-interactive"}
+2024/11/14 17:31:30 执行定时任务: startPlayer
+2024/11/14 17:31:30 run task1
+2024/11/14 17:31:32 ws 发送msg {"command":"heartbeat-ping","content":{},"from":"30","to":"0","biz":"rt-service-interactive"}
