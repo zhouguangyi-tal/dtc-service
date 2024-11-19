@@ -14,11 +14,10 @@ func (c *Config) Init(dir string) {
 	c.Conf = ConfEntity{}
 	data, err := os.ReadFile(dir + "/config.yaml")
 	if err != nil {
-		log.Fatalf("读取配置文件失败: %v", err)
+		log.Printf("读取配置文件失败: %v\n", err)
 	}
 	err = yaml.Unmarshal(data, &c.Conf)
 	if err != nil {
-		log.Fatalf("解析配置文件失败: %v", err)
+		log.Printf("解析配置文件失败: %v\n", err)
 	}
-	log.Println("zzz", c.Conf.WS)
 }

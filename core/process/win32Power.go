@@ -2,124 +2,188 @@ package process
 
 import (
 	"fmt"
-	"syscall"
+	"golang.org/x/sys/windows"
 	"unsafe"
 )
 
 var (
-	modKernel32                  = syscall.NewLazyDLL("kernel32.dll")
-	modAdvapi32                  = syscall.NewLazyDLL("advapi32.dll")
-	procCreateToolhelp32Snapshot = modKernel32.NewProc("CreateToolhelp32Snapshot")
-	procProcess32First           = modKernel32.NewProc("Process32FirstW")
-	procProcess32Next            = modKernel32.NewProc("Process32NextW")
-	procOpenProcess              = modKernel32.NewProc("OpenProcess")
-	procOpenProcessToken         = modAdvapi32.NewProc("OpenProcessToken")
-	procDuplicateTokenEx         = modAdvapi32.NewProc("DuplicateTokenEx")
-	procCreateProcessAsUser      = modAdvapi32.NewProc("CreateProcessAsUserW")
+	modwtsapi32                      *windows.LazyDLL  = windows.NewLazySystemDLL("wtsapi32.dll")
+	modkernel32                      *windows.LazyDLL  = windows.NewLazySystemDLL("kernel32.dll")
+	modadvapi32                      *windows.LazyDLL  = windows.NewLazySystemDLL("advapi32.dll")
+	moduserenv                       *windows.LazyDLL  = windows.NewLazySystemDLL("userenv.dll")
+	procWTSEnumerateSessionsW        *windows.LazyProc = modwtsapi32.NewProc("WTSEnumerateSessionsW")
+	procWTSGetActiveConsoleSessionId *windows.LazyProc = modkernel32.NewProc("WTSGetActiveConsoleSessionId")
+	procWTSQueryUserToken            *windows.LazyProc = modwtsapi32.NewProc("WTSQueryUserToken")
+	procDuplicateTokenEx             *windows.LazyProc = modadvapi32.NewProc("DuplicateTokenEx")
+	procCreateEnvironmentBlock       *windows.LazyProc = moduserenv.NewProc("CreateEnvironmentBlock")
+	procCreateProcessAsUser          *windows.LazyProc = modadvapi32.NewProc("CreateProcessAsUserW")
+	procGetTokenInformation          *windows.LazyProc = modadvapi32.NewProc("GetTokenInformation")
 )
+
+type WTS_CONNECTSTATE_CLASS int
+type SECURITY_IMPERSONATION_LEVEL int
+type TOKEN_TYPE int
+type SW int
+type WTS_SESSION_INFO struct {
+	SessionID      windows.Handle
+	WinStationName *uint16
+	State          WTS_CONNECTSTATE_CLASS
+}
+type TOKEN_LINKED_TOKEN struct {
+	LinkedToken windows.Token
+}
 
 const (
-	TH32CS_SNAPPROCESS        = 0x00000002
-	PROCESS_QUERY_INFORMATION = 0x0400
-	PROCESS_CREATE_PROCESS    = 0x0080
-	TOKEN_DUPLICATE           = 0x0002
-	TOKEN_QUERY               = 0x0008
-	TOKEN_ASSIGN_PRIMARY      = 0x0001
-	TOKEN_ADJUST_DEFAULT      = 0x0080
-	TOKEN_ADJUST_SESSIONID    = 0x0100
-	STARTF_USESHOWWINDOW      = 0x00000001
-	CREATE_NEW_CONSOLE        = 0x00000010
+	WTS_CURRENT_SERVER_HANDLE uintptr = 0
+)
+const (
+	WTSActive WTS_CONNECTSTATE_CLASS = iota
+	WTSConnected
+	WTSConnectQuery
+	WTSShadow
+	WTSDisconnected
+	WTSIdle
+	WTSListen
+	WTSReset
+	WTSDown
+	WTSInit
+)
+const (
+	SecurityAnonymous SECURITY_IMPERSONATION_LEVEL = iota
+	SecurityIdentification
+	SecurityImpersonation
+	SecurityDelegation
+)
+const (
+	TokenPrimary TOKEN_TYPE = iota + 1
+	TokenImpersonazion
+)
+const (
+	SW_HIDE            SW = 0
+	SW_SHOWNORMAL         = 1
+	SW_NORMAL             = 1
+	SW_SHOWMINIMIZED      = 2
+	SW_SHOWMAXIMIZED      = 3
+	SW_MAXIMIZE           = 3
+	SW_SHOWNOACTIVATE     = 4
+	SW_SHOW               = 5
+	SW_MINIMIZE           = 6
+	SW_SHOWMINNOACTIVE    = 7
+	SW_SHOWNA             = 8
+	SW_RESTORE            = 9
+	SW_SHOWDEFAULT        = 10
+	SW_MAX                = 1
+)
+const (
+	CREATE_UNICODE_ENVIRONMENT uint16 = 0x00000400
+	CREATE_NO_WINDOW                  = 0x08000000
+	CREATE_NEW_CONSOLE                = 0x00000010
 )
 
-type PROCESSENTRY32 struct {
-	dwSize              uint32
-	cntUsage            uint32
-	th32ProcessID       uint32
-	th32DefaultHeapID   uintptr
-	th32ModuleID        uint32
-	cntThreads          uint32
-	th32ParentProcessID uint32
-	pcPriClassBase      int32
-	dwFlags             uint32
-	szExeFile           [260]uint16
-}
-
-func getExplorerProcessId() (uint32, error) {
-	hSnapshot, _, err := procCreateToolhelp32Snapshot.Call(TH32CS_SNAPPROCESS, 0)
-	if hSnapshot == uintptr(syscall.InvalidHandle) {
-		return 0, err
+// 获得当前系统活动的SessionID
+func getCurrentUserSessionId() (windows.Handle, error) {
+	sessionList, err := wTSEnumerateSessions()
+	if err != nil {
+		return 0xFFFFFFFF, fmt.Errorf("get current user session token: %s", err)
 	}
-	defer syscall.CloseHandle(syscall.Handle(hSnapshot))
-
-	var pe32 PROCESSENTRY32
-	pe32.dwSize = uint32(unsafe.Sizeof(pe32))
-	ret, _, err := procProcess32First.Call(hSnapshot, uintptr(unsafe.Pointer(&pe32)))
-	if ret == 0 {
-		return 0, err
-	}
-
-	for {
-		if syscall.UTF16ToString(pe32.szExeFile[:]) == "explorer.exe" {
-			return pe32.th32ProcessID, nil
-		}
-		ret, _, err = procProcess32Next.Call(hSnapshot, uintptr(unsafe.Pointer(&pe32)))
-		if ret == 0 {
-			break
+	for i := range sessionList {
+		if sessionList[i].State == WTSActive {
+			return sessionList[i].SessionID, nil
 		}
 	}
-
-	return 0, fmt.Errorf("explorer.exe process not found")
+	if sessionId, _, err := procWTSGetActiveConsoleSessionId.Call(); sessionId == 0xFFFFFFFF {
+		return 0xFFFFFFFF, fmt.Errorf("get current user session token: call native WTSGetActiveConsoleSessionId: %s", err)
+	} else {
+		return windows.Handle(sessionId), nil
+	}
 }
 
-func CreateForegroundProcess(applicationName string, args ...string) error {
-	explorerPID, err := getExplorerProcessId()
-	if err != nil {
+func wTSEnumerateSessions() ([]*WTS_SESSION_INFO, error) {
+	var (
+		sessionInformation windows.Handle      = windows.Handle(0)
+		sessionCount       int                 = 0
+		sessionList        []*WTS_SESSION_INFO = make([]*WTS_SESSION_INFO, 0)
+	)
+	if returnCode, _, err := procWTSEnumerateSessionsW.Call(WTS_CURRENT_SERVER_HANDLE, 0, 1, uintptr(unsafe.Pointer(&sessionInformation)), uintptr(unsafe.Pointer(&sessionCount))); returnCode == 0 {
+		return nil, fmt.Errorf("call native WTSEnumerateSessionsW: %s", err)
+	}
+	structSize := unsafe.Sizeof(WTS_SESSION_INFO{})
+	current := uintptr(sessionInformation)
+	for i := 0; i < sessionCount; i++ {
+		sessionList = append(sessionList, (*WTS_SESSION_INFO)(unsafe.Pointer(current)))
+		current += structSize
+	}
+	return sessionList, nil
+}
+
+func duplicateUserTokenFromSessionID(sessionId windows.Handle, runas bool) (windows.Token, error) {
+	var (
+		impersonationToken windows.Handle = 0
+		userToken          windows.Token  = 0
+	)
+
+	if returnCode, _, err := procWTSQueryUserToken.Call(uintptr(sessionId), uintptr(unsafe.Pointer(&impersonationToken))); returnCode == 0 {
+		return 0xFFFFFFFF, fmt.Errorf("call native WTSQueryUserToken: %s", err)
+	}
+
+	if returnCode, _, err := procDuplicateTokenEx.Call(uintptr(impersonationToken), 0, 0, uintptr(SecurityImpersonation), uintptr(TokenPrimary), uintptr(unsafe.Pointer(&userToken))); returnCode == 0 {
+		return 0xFFFFFFFF, fmt.Errorf("call native DuplicateTokenEx: %s", err)
+	}
+	if runas {
+		var admin TOKEN_LINKED_TOKEN
+		var dt uintptr = 0
+		if returnCode, _, _ := procGetTokenInformation.Call(uintptr(impersonationToken), 19, uintptr(unsafe.Pointer(&admin)), uintptr(unsafe.Sizeof(admin)), uintptr(unsafe.Pointer(&dt))); returnCode != 0 {
+			userToken = admin.LinkedToken
+		}
+	}
+	if err := windows.CloseHandle(impersonationToken); err != nil {
+		return 0xFFFFFFFF, fmt.Errorf("close windows handle used for token duplication: %s", err)
+	}
+	return userToken, nil
+}
+
+func StartProcessAsCurrentUser(appPath, cmdLine, workDir string, runas bool) error {
+	var (
+		sessionId windows.Handle
+		userToken windows.Token
+		envInfo   windows.Handle
+
+		startupInfo windows.StartupInfo
+		processInfo windows.ProcessInformation
+
+		commandLine uintptr = 0
+		workingDir  uintptr = 0
+
+		err error
+	)
+
+	if sessionId, err = getCurrentUserSessionId(); err != nil {
 		return err
 	}
 
-	hProcess, _, err := procOpenProcess.Call(PROCESS_QUERY_INFORMATION, 0, uintptr(explorerPID))
-	if hProcess == 0 {
-		return err
-	}
-	defer syscall.CloseHandle(syscall.Handle(hProcess))
-
-	var hToken syscall.Token
-	ret, _, err := procOpenProcessToken.Call(hProcess, TOKEN_DUPLICATE|TOKEN_QUERY, uintptr(unsafe.Pointer(&hToken)))
-	if ret == 0 {
-		return err
-	}
-	defer syscall.CloseHandle(syscall.Handle(hToken))
-
-	var hNewToken syscall.Token
-	ret, _, err = procDuplicateTokenEx.Call(uintptr(hToken), TOKEN_ASSIGN_PRIMARY|TOKEN_DUPLICATE|TOKEN_QUERY|TOKEN_ADJUST_DEFAULT|TOKEN_ADJUST_SESSIONID, 0, 2, 1, uintptr(unsafe.Pointer(&hNewToken)))
-	if ret == 0 {
-		return err
-	}
-	defer syscall.CloseHandle(syscall.Handle(hNewToken))
-
-	var si syscall.StartupInfo
-	var pi syscall.ProcessInformation
-	si.Cb = uint32(unsafe.Sizeof(si))
-	si.Flags = STARTF_USESHOWWINDOW
-	si.ShowWindow = syscall.SW_SHOW
-
-	commandLine := applicationName
-	for _, arg := range args {
-		commandLine += " " + arg
+	if userToken, err = duplicateUserTokenFromSessionID(sessionId, runas); err != nil {
+		return fmt.Errorf("get duplicate user token for current user session: %s", err)
 	}
 
-	commandLinePtr, err := syscall.UTF16PtrFromString(commandLine)
-	if err != nil {
-		return err
+	if returnCode, _, err := procCreateEnvironmentBlock.Call(uintptr(unsafe.Pointer(&envInfo)), uintptr(userToken), 0); returnCode == 0 {
+		return fmt.Errorf("create environment details for process: %s", err)
 	}
 
-	ret, _, err = procCreateProcessAsUser.Call(uintptr(hNewToken), 0, uintptr(unsafe.Pointer(commandLinePtr)), 0, 0, 0, CREATE_NEW_CONSOLE, 0, 0, uintptr(unsafe.Pointer(&si)), uintptr(unsafe.Pointer(&pi)))
-	if ret == 0 {
-		return err
+	creationFlags := CREATE_UNICODE_ENVIRONMENT | CREATE_NEW_CONSOLE
+	startupInfo.ShowWindow = SW_SHOW
+	startupInfo.Desktop = windows.StringToUTF16Ptr("winsta0\\default")
+
+	if len(cmdLine) > 0 {
+		commandLine = uintptr(unsafe.Pointer(windows.StringToUTF16Ptr(appPath + " " + cmdLine)))
 	}
-
-	syscall.CloseHandle(pi.Thread)
-	syscall.CloseHandle(pi.Process)
-
+	if len(workDir) > 0 {
+		workingDir = uintptr(unsafe.Pointer(windows.StringToUTF16Ptr(workDir)))
+	}
+	if returnCode, _, err := procCreateProcessAsUser.Call(
+		uintptr(userToken), uintptr(unsafe.Pointer(windows.StringToUTF16Ptr(appPath))), commandLine, 0, 0, 0,
+		uintptr(creationFlags), uintptr(envInfo), workingDir, uintptr(unsafe.Pointer(&startupInfo)), uintptr(unsafe.Pointer(&processInfo)),
+	); returnCode == 0 {
+		return fmt.Errorf("create process as user: %s", err)
+	}
 	return nil
 }

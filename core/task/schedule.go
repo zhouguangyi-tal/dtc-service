@@ -1,18 +1,26 @@
 package task
 
 import (
+	"fmt"
 	"log"
 	"strconv"
 	"time"
 )
 
+type dailyTime struct {
+	hour int
+	min  int
+}
+
 type TaskSchedule struct {
-	taskBuffer map[int]map[string]*Task //待执行任务buffer,按ticker 周期触发
+	taskBuffer      map[string]*Task //待执行任务buffer,按ticker 周期触发
+	dailyTaskBuffer map[dailyTime][]*Task
 }
 
 func (s *TaskSchedule) Init() {
 	log.Println("taskSchedule init")
-	s.taskBuffer = make(map[int]map[string]*Task)
+	s.taskBuffer = make(map[string]*Task)
+	s.dailyTaskBuffer = make(map[dailyTime][]*Task)
 }
 func (s *TaskSchedule) Start() {
 	ticker := time.NewTicker(1 * time.Second)
@@ -21,26 +29,25 @@ func (s *TaskSchedule) Start() {
 		for {
 			select {
 			case <-ticker.C:
-				for second, tasks := range s.taskBuffer {
-					if second == 0 { //立即任务
-						for name, tk := range tasks {
+				for name, tk := range s.taskBuffer {
+					second := tk.second
+					now := time.Now()
+					if second == 0 || now.Unix()%second == 0 {
+						go func() {
+							log.Println("执行定时任务:", name)
+							tk.Run()
+						}()
+					}
+				}
+				for nextTime, taskArr := range s.dailyTaskBuffer { //
+					now := time.Now()
+					next := time.Date(now.Year(), now.Month(), now.Day(), nextTime.hour, nextTime.min, 0, 0, now.Location())
+					if now.Unix() == next.Unix() {
+						for _, task := range taskArr {
 							go func() {
-								log.Println("执行任务:", name)
-								tk.Run()
-								delete(tasks, name)
+								log.Println("执行定时任务:", task.name)
+								task.Run()
 							}()
-						}
-					} else {
-						now := time.Now().Unix()
-						if now%int64(second) == 0 {
-							for name, tk := range tasks {
-								if tk.GetStatus() == Ready {
-									go func() {
-										log.Println("执行定时任务:", name)
-										tk.Run()
-									}()
-								}
-							}
 						}
 					}
 				}
@@ -49,41 +56,55 @@ func (s *TaskSchedule) Start() {
 	}()
 }
 
-func (s *TaskSchedule) AddTask(name string, tk *Task) {
-	secondTime := tk.TickerSecond
-	if s.taskBuffer[secondTime] == nil {
-		s.taskBuffer[secondTime] = make(map[string]*Task)
-	}
-	s.taskBuffer[secondTime][name] = tk
+func (s *TaskSchedule) AddTask(tk *Task, second int64) {
+	name := tk.name
+	tk.second = second
+	s.taskBuffer[name] = tk
+	log.Println("添加任务", name, strconv.Itoa(int(second))+"s")
+}
 
-	msg := "添加任务"
-	if secondTime > 0 {
-		msg = "添加定时任务"
+func (s *TaskSchedule) AddDailyTask(tk *Task, hour, minute int) {
+	name := tk.name
+	daily := dailyTime{
+		hour: hour,
+		min:  minute,
 	}
-	msg += name
-	log.Println(msg, strconv.Itoa(secondTime)+"s")
+	s.dailyTaskBuffer[daily] = append(s.dailyTaskBuffer[daily], tk)
+	log.Println("添加每日任务", name, hour, minute)
 }
 
 func (s *TaskSchedule) StopTask(name string) {
-	for _, tasks := range s.taskBuffer {
-		for tkName, tk := range tasks {
-			if tkName == name {
-				log.Println("停止定时任务", name)
-				tk.Stop()
+	for tkName, tk := range s.taskBuffer {
+		if tkName == name {
+			log.Println("停止定时任务", name)
+			tk.Stop()
+		}
+	}
+	for _, taskArr := range s.dailyTaskBuffer {
+		for _, task := range taskArr {
+			if task.name == name {
+				log.Println("停止每日任务", name)
+				task.Stop()
 			}
-
 		}
 	}
 }
 
 func (s *TaskSchedule) DelTask(name string) {
-	for _, tasks := range s.taskBuffer {
-		for tkName, _ := range tasks {
-			if tkName == name {
-				log.Println("删除定时任务", name)
-				delete(tasks, name)
-			}
-
+	for tkName, _ := range s.taskBuffer {
+		if tkName == name {
+			log.Println("删除定时任务", name)
+			delete(s.taskBuffer, name)
 		}
 	}
+	for daily, taskArr := range s.dailyTaskBuffer {
+		for i := 0; i < len(taskArr); i++ {
+			if taskArr[i].name == name {
+				log.Println("删除每日任务", name)
+				s.dailyTaskBuffer[daily] = append(taskArr[:i], taskArr[i+1:]...)
+				break
+			}
+		}
+	}
+	fmt.Println("zzzz", s.dailyTaskBuffer)
 }

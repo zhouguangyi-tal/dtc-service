@@ -19,7 +19,7 @@ func (r *Registry) Init(path string) {
 func (r *Registry) readSubKey() { //读取 注册表的子项
 	key, err := registry.OpenKey(registry.LOCAL_MACHINE, r.path, registry.READ)
 	if err != nil {
-		log.Fatalln("Error opening registry key:", err)
+		log.Println("Error opening registry key:", err)
 		return
 	}
 	defer key.Close()
@@ -32,7 +32,7 @@ func (r *Registry) readSubKey() { //读取 注册表的子项
 func (r *Registry) readKeyValue(keyName string) { //读取注册表的值
 	key, err := registry.OpenKey(registry.LOCAL_MACHINE, r.path+"\\"+keyName, registry.QUERY_VALUE)
 	if err != nil {
-		log.Fatalln("Error opening registry value:", err)
+		log.Println("Error opening registry value:", err)
 		return
 	}
 	defer key.Close()
@@ -41,7 +41,7 @@ func (r *Registry) readKeyValue(keyName string) { //读取注册表的值
 	for _, name := range names {
 		val, _, err := key.GetStringValue(name)
 		if err != nil {
-			log.Fatalln("Error reading value:", err)
+			log.Println("Error reading value:", err)
 		}
 		r.talReg[keyName][name] = val
 	}

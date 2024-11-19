@@ -2,8 +2,8 @@ package net
 
 import (
 	"encoding/json"
-	"fmt"
 	"golang.org/x/net/websocket"
+	"io"
 	"log"
 	"time"
 )
@@ -19,38 +19,48 @@ func (w *WsClient) Init(url string) {
 }
 
 func (w *WsClient) connect() {
+	if w.ws != nil {
+		err := w.ws.Close()
+		if err != nil {
+			return
+		}
+	}
 	origin := "http://localhost/"
 	ws, err := websocket.Dial(w.url, "", origin)
 	if err != nil {
-		log.Fatal("ws建立失败", err)
+		log.Println("ws建立失败", err)
+		time.AfterFunc(360*time.Second, w.connect)
+	} else {
+		w.ws = ws
 	}
-	w.ws = ws
 }
 
 func (w *WsClient) Start() {
-	go func() {
-		if w.ws != nil {
-			defer func(ws *websocket.Conn) {
-				err := ws.Close()
-				if err != nil {
-					log.Fatal("ws close 异常", err)
-				}
-			}(w.ws)
-			for {
-				var msg string
-				// 读取消息
-				if err := websocket.Message.Receive(w.ws, &msg); err != nil {
-					fmt.Println("读取消息失败:", err)
-					return
-				} else {
-					fmt.Printf("接收到消息: %s\n", msg)
-				}
+	go w.ReceiveMsg()
+	go w.KeepAlive()
+}
 
+func (w *WsClient) ReceiveMsg() {
+	if w.ws != nil {
+		defer func(ws *websocket.Conn) {
+			err := ws.Close()
+			if err != nil {
+				log.Println("ws close 异常", err)
+			}
+		}(w.ws)
+		for {
+			var msg string
+			if err := websocket.Message.Receive(w.ws, &msg); err != nil {
+				if err == io.EOF {
+					log.Println("ws 被服务的关闭,重新连接")
+					w.connect()
+				}
+			} else {
+				log.Printf("接收到消息: %s\n", msg)
 			}
 		}
+	}
 
-	}()
-	go w.KeepAlive()
 }
 
 func (w *WsClient) SendMsg(msg string) {
@@ -58,7 +68,7 @@ func (w *WsClient) SendMsg(msg string) {
 	if w.ws != nil {
 		_, err := w.ws.Write([]byte(msg))
 		if err != nil {
-			log.Fatal("ws 发送msg失败", msg)
+			log.Println("ws 发送msg失败", msg)
 			return
 		} else {
 			log.Println("ws 发送msg", msg)

@@ -22,7 +22,8 @@ func main() {
 		Description: SVRDES,
 	}
 
-	dir, err := filepath.Abs(".")
+	//dir, err := filepath.Abs(".")
+	dir, err := filepath.Abs(filepath.Dir(os.Args[0]))
 	t := time.Now()
 	fn := fmt.Sprintf(dir+"\\server-%v.log", t.YearDay())
 	f, err := os.OpenFile(fn, os.O_APPEND|os.O_CREATE|os.O_WRONLY, 0644)
@@ -36,12 +37,12 @@ func main() {
 	var ms = &MainServe{}
 	err = ms.Init(dir) //主线初始化
 	if err != nil {
-		log.Fatalf("Init service error:%s\n", err.Error())
+		log.Printf("Init service error:%s\n", err.Error())
 	}
 	server := service.ChosenSystem()
 	srv, err := server.New(ms, &cfg)
 	if err != nil {
-		log.Fatalf("Init service error:%s\n", err.Error())
+		log.Printf("Init service error:%s\n", err.Error())
 	}
 	if len(os.Args) > 1 {
 		log.Println("Args[1]:", os.Args[1])
@@ -49,7 +50,7 @@ func main() {
 		case "install":
 			err := srv.Install()
 			if err != nil {
-				log.Fatalf("Install service error:%s\n", err.Error())
+				log.Printf("Install service error:%s\n", err.Error())
 			} else {
 				log.Println("server is installed")
 			}
@@ -58,7 +59,7 @@ func main() {
 			err := srv.Stop()
 			err = srv.Uninstall()
 			if err != nil {
-				log.Fatalf("Uninstall service error:%s\n", err.Error())
+				log.Printf("Uninstall service error:%s\n", err.Error())
 			} else {
 				log.Println("server is uninstalled")
 			}
@@ -66,7 +67,7 @@ func main() {
 		case "debug":
 			err = srv.Run()
 			if err != nil {
-				log.Fatalf("debug programe error:%s\n", err.Error())
+				log.Printf("debug programe error:%s\n", err.Error())
 			}
 			break
 		default:
@@ -76,7 +77,7 @@ func main() {
 	}
 	err = srv.Run()
 	if err != nil {
-		log.Fatalf("run deamon error:%s\n", err.Error())
+		log.Printf("run deamon error:%s\n", err.Error())
 		return
 	}
 }
