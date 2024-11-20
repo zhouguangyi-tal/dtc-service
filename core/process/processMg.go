@@ -11,7 +11,7 @@ func InstallProgram(path string, param string) {
 	if err != nil {
 		log.Println("Error:安装软件失败", path, err)
 	} else {
-		log.Println("安装软件成功", path)
+		log.Println("打开安装程序成功", path)
 	}
 }
 

@@ -68,7 +68,7 @@ func (w *WsClient) SendMsg(msg string) {
 	if w.ws != nil {
 		_, err := w.ws.Write([]byte(msg))
 		if err != nil {
-			log.Println("ws 发送msg失败", msg)
+			log.Println("ws 发送msg失败", err, msg)
 			return
 		} else {
 			log.Println("ws 发送msg", msg)

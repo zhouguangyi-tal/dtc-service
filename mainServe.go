@@ -1,6 +1,7 @@
 package main
 
 import (
+	"dtc-service/biz/request"
 	"dtc-service/biz/software"
 	"dtc-service/core/config"
 	"dtc-service/core/net"
@@ -30,13 +31,13 @@ func (ms *MainServe) Start(s service.Service) error {
 	ms.schedule.Start()
 	ms.wsClient.Start()
 
-	//process.RunProgram(reg.Betterme)
 	tk1 := task.Task{}
 	tk1.CreateTask("安装云课堂", func() {
-		software.InstallSoftware(`D:\yunketang.exe`)
-	})
-	ms.schedule.AddDailyTask(&tk1, 17, 6)
 
+	})
+	software.InstallSoftware(`D:\yunketang.exe`)
+	ms.schedule.AddDailyTask(&tk1, 17, 6)
+	request.GetUpdateConfig()
 	return nil
 }
 
